@@ -37,6 +37,12 @@ int main(void)
 	initscr();
 	curs_set(0);
 	noecho();
+	if(has_colors())
+	{
+		start_color();
+		use_default_colors();
+		init_pair(1,COLOR_CYAN,-1);
+	}
 
 	getmaxyx(stdscr,y,x);
 	if((win=newwin(5,40,y/2-5/2,x/2-40/2))==NULL)
@@ -50,6 +56,7 @@ int main(void)
 	if(pthread_create(&thread,NULL,normal_quit,win)==-1)
 		error_quit("Create thread Error!");
 
+	wattron(win,COLOR_PAIR(1));
 	while(1)
 	{
 		t=time(NULL);
